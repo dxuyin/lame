@@ -225,7 +225,7 @@ optimum_bandwidth(double *const lowerlimit, double *const upperlimit, const unsi
         {192, 18600},
         {224, 19400},
         {256, 19700},
-        {320, 20500}
+        {320, 24000}
     };
 
 
@@ -465,11 +465,8 @@ lame_init_qval(lame_global_flags * gfp)
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 1; /*type 2 disabled because of it slowness,
-                                      in favor of full outer loop search */
-        cfg->full_outer_loop = 0; /* full outer loop search disabled because
-                                     of audible distortions it may generate
-                                     rh 060629 */
+        cfg->use_best_huffman = 2; /* better quality (maybe) */
+        cfg->full_outer_loop = 1; /* test dy 220603 */
         break;
     }
 
