@@ -210,11 +210,11 @@ optimum_bandwidth(double *const lowerlimit, double *const upperlimit, const unsi
 
     const band_pass_t freq_map[] = {
         {8,  2000},
-        {16,  3700},
-        {24,  3900},
-        {32,  5500},
-        {40,  7000},
-        {48,  7500},
+        {16, 3700},
+        {24, 3900},
+        {32, 5500},
+        {40, 7000},
+        {48, 7500},
         {56, 10000},
         {64, 11000},
         {80, 13500},
