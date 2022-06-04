@@ -211,7 +211,11 @@ apply_vbr_preset(lame_global_flags * gfp, int a, int enforce)
         gfp->VBR_q_frac = x;
     }
     gfp->internal_flags->cfg.minval = set->minval;
-    gfp->internal_flags->cfg.ATHfixpoint = set->ath_fixpoint;
+     {   /* take care of gain adjustments */
+         double const x = fabs(gfp->scale);
+         double const y = (x > 0.f) ? (10.f * log10(x)) : 0.f;
+         gfp->internal_flags->cfg.ATHfixpoint = set->ath_fixpoint - y;
+     }
 }
 
 static int
