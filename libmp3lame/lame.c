@@ -461,7 +461,7 @@ lame_init_qval(lame_global_flags * gfp)
             cfg->noise_shaping = 1;
         if (gfc->sv_qnt.substep_shaping == 0)
             gfc->sv_qnt.substep_shaping = 2;
-        cfg->noise_shaping_amp = 2;
+        cfg->noise_shaping_amp = 3;
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
