@@ -442,7 +442,7 @@ lame_init_qval(lame_global_flags * gfp)
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 1; /* inner loop */
+        cfg->use_best_huffman = 1;
         cfg->full_outer_loop = 0;
         break;
 
@@ -468,8 +468,7 @@ lame_init_qval(lame_global_flags * gfp)
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 2; /*type 2 disabled because of it slowness,
-                                      in favor of full outer loop search */
+        cfg->use_best_huffman = 2;
         cfg->full_outer_loop = 1;
         break;
     }
