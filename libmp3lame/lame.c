@@ -376,25 +376,53 @@ lame_init_qval(lame_global_flags * gfp)
         break;
 
     case 8:
-        if (cfg->noise_shaping == 0)
-            cfg->noise_shaping = 1;
-        cfg->noise_shaping_amp = 1;
-        cfg->noise_shaping_stop = 0;
-        if (cfg->subblock_gain == -1)
-            cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 1;
-        cfg->full_outer_loop = 1;
-        break;
-
+        gfp->quality = 7;
+        /*lint --fallthrough */
     case 7:            /* use psymodel (for short block and m/s switching), but no noise shapping */
         cfg->noise_shaping = 0;
         cfg->noise_shaping_amp = 0;
         cfg->noise_shaping_stop = 0;
         cfg->use_best_huffman = 0;
         cfg->full_outer_loop = 0;
+        if (cfg->vbr == vbr_mt || cfg->vbr == vbr_mtrh) {
+            cfg->full_outer_loop  = -1;
+        }
         break;
 
     case 6:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        cfg->noise_shaping_amp = 0;
+        cfg->noise_shaping_stop = 0;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 0;
+        cfg->full_outer_loop = 0;
+        break;
+
+    case 5:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        cfg->noise_shaping_amp = 0;
+        cfg->noise_shaping_stop = 0;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 0;
+        cfg->full_outer_loop = 0;
+        break;
+
+    case 4:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        cfg->noise_shaping_amp = 0;
+        cfg->noise_shaping_stop = 0;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 1;
+        cfg->full_outer_loop = 0;
+        break;
+
+    case 3:
         if (cfg->noise_shaping == 0)
             cfg->noise_shaping = 1;
         cfg->noise_shaping_amp = 1;
@@ -403,39 +431,6 @@ lame_init_qval(lame_global_flags * gfp)
             cfg->subblock_gain = 1;
         cfg->use_best_huffman = 1;
         cfg->full_outer_loop = 0;
-        break;
-
-    case 5:
-        if (cfg->noise_shaping == 0)
-            cfg->noise_shaping = 1;
-        cfg->noise_shaping_amp = 2;
-        cfg->noise_shaping_stop = 1;
-        if (cfg->subblock_gain == -1)
-            cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 1;
-        cfg->full_outer_loop = 0;
-        break;
-
-    case 4:
-        if (cfg->noise_shaping == 0)
-            cfg->noise_shaping = 1;
-        cfg->noise_shaping_amp = 2;
-        cfg->noise_shaping_stop = 1;
-        if (cfg->subblock_gain == -1)
-            cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 0;
-        cfg->full_outer_loop = 1;
-        break;
-
-    case 3:
-        if (cfg->noise_shaping == 0)
-            cfg->noise_shaping = 1;
-        cfg->noise_shaping_amp = 2;
-        cfg->noise_shaping_stop = 1;
-        if (cfg->subblock_gain == -1)
-            cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 1;
-        cfg->full_outer_loop = 1;
         break;
 
     case 2:
@@ -443,12 +438,12 @@ lame_init_qval(lame_global_flags * gfp)
             cfg->noise_shaping = 1;
         if (gfc->sv_qnt.substep_shaping == 0)
             gfc->sv_qnt.substep_shaping = 2;
-        cfg->noise_shaping_amp = 3;
+        cfg->noise_shaping_amp = 2;
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 1;
-        cfg->full_outer_loop = 1;
+        cfg->use_best_huffman = 1; /* inner loop */
+        cfg->full_outer_loop = 0;
         break;
 
     case 1:
@@ -473,7 +468,8 @@ lame_init_qval(lame_global_flags * gfp)
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 2;
+        cfg->use_best_huffman = 2; /*type 2 disabled because of it slowness,
+                                      in favor of full outer loop search */
         cfg->full_outer_loop = 1;
         break;
     }
