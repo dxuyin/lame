@@ -102,7 +102,7 @@ typedef struct {
         {10,      9,       9,    1,   6.60, 145.0,       2.0,    2.0,     -36,        12,        -25,   0.0008,         0,       0,  0,    5, 100}
     };
 
-static const vbr_presets_t vbr_psy_switch_map[] = {
+    static const vbr_presets_t vbr_psy_switch_map[] = {
      /*vbr_q  qcomp_l  qcomp_s  expY  st_lrm   st_s  mask adj_l  adj_s  ath_lower  ath_curve  ath_sens  interChR  safejoint sfb21mod  msfix */
          {0,       9,       9,    0,   4.20,  25.0,      -7.0,   -4.0,       7.5,       1,          0,   0,              2,      29,  0.97, 15, 100},
          {1,       9,       9,    0,   4.20,  25.0,      -5.6,   -3.6,       4.5,       1.5,        0,   0,              2,      24,  1.35, 15, 100},
