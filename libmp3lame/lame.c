@@ -61,7 +61,7 @@
 #endif
 
 
-#define LAME_DEFAULT_QUALITY 6
+#define LAME_DEFAULT_QUALITY 3
 
 
 
