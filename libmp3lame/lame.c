@@ -61,7 +61,7 @@
 #endif
 
 
-#define LAME_DEFAULT_QUALITY 3
+#define LAME_DEFAULT_QUALITY 4
 
 
 
@@ -411,8 +411,8 @@ lame_init_qval(lame_global_flags * gfp)
     case 4:
         if (cfg->noise_shaping == 0)
             cfg->noise_shaping = 1;
-        cfg->noise_shaping_amp = 0;
-        cfg->noise_shaping_stop = 0;
+        cfg->noise_shaping_amp = 1;
+        cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
         cfg->use_best_huffman = 1;
@@ -422,7 +422,7 @@ lame_init_qval(lame_global_flags * gfp)
     case 3:
         if (cfg->noise_shaping == 0)
             cfg->noise_shaping = 1;
-        cfg->noise_shaping_amp = 1;
+        cfg->noise_shaping_amp = 2;
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
@@ -435,12 +435,12 @@ lame_init_qval(lame_global_flags * gfp)
             cfg->noise_shaping = 1;
         if (gfc->sv_qnt.substep_shaping == 0)
             gfc->sv_qnt.substep_shaping = 2;
-        cfg->noise_shaping_amp = 1;
+        cfg->noise_shaping_amp = 2;
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
         cfg->use_best_huffman = 1; /* inner loop */
-        cfg->full_outer_loop = 0;
+        cfg->full_outer_loop = 1;
         break;
 
     case 1:
@@ -452,8 +452,8 @@ lame_init_qval(lame_global_flags * gfp)
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 1;
-        cfg->full_outer_loop = 0;
+        cfg->use_best_huffman = 2;
+        cfg->full_outer_loop = 1;
         break;
 
     case 0:
@@ -465,8 +465,8 @@ lame_init_qval(lame_global_flags * gfp)
         cfg->noise_shaping_stop = 1;
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
-        cfg->use_best_huffman = 2; /* better quality (maybe) */
-        cfg->full_outer_loop = 1; /* test dy 220603 */
+        cfg->use_best_huffman = 2;
+        cfg->full_outer_loop = 1;
         break;
     }
 
