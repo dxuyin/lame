@@ -385,7 +385,7 @@ lame_init_qval(lame_global_flags * gfp)
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
         cfg->use_best_huffman = 1;
-        cfg->full_outer_loop = 1;
+        cfg->full_outer_loop = 0;
         break;
             
     case 7:            /* use psymodel (for short block and m/s switching), but no noise shapping */
