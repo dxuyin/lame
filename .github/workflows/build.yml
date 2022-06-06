@@ -24,6 +24,6 @@ jobs:
       run: make check
 
     - uses: actions/upload-artifacts@v2
-     with:
-     name: lame
-    path: frontend/lame
+       with:
+         name: lame
+         path: frontend/lame
