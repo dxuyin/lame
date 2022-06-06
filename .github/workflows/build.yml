@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
     - name: configure
       run: ./configure --enable-mp3rtp --enable-shared --enable-static --disable-decoder
       
-    - name: Install dependencies
+    - name: build
       run: make
       
     - name: Run check
