@@ -260,7 +260,7 @@ int CDECL lame_get_ogg(const lame_global_flags *);
                 5     good quality, fast
                 7     ok quality, really fast
 */
-int CDECL lame_set_quality(lame_global_flags *, int);
+int CDECL lame_set_quality(lame_global_flags *, int i);
 int CDECL lame_get_quality(const lame_global_flags *);
 
 /*
