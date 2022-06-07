@@ -366,7 +366,46 @@ lame_init_qval(lame_global_flags * gfp)
     SessionConfig_t *const cfg = &gfc->cfg;
 
     switch (gfp->quality) {
-    default:
+    default:    
+        case 12:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        if (gfc->sv_qnt.substep_shaping == 0)
+            gfc->sv_qnt.substep_shaping = 2;
+        cfg->noise_shaping_amp = 3;
+        cfg->noise_shaping_stop = 3;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 1;
+        cfg->full_outer_loop = 0;
+        break;
+            
+        case 11:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        if (gfc->sv_qnt.substep_shaping == 0)
+            gfc->sv_qnt.substep_shaping = 2;
+        cfg->noise_shaping_amp = 2;
+        cfg->noise_shaping_stop = 2;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 1;
+        cfg->full_outer_loop = 0;
+        break;
+            
+    case 10:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        if (gfc->sv_qnt.substep_shaping == 0)
+            gfc->sv_qnt.substep_shaping = 2;
+        cfg->noise_shaping_amp = 3;
+        cfg->noise_shaping_stop = 2;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 2;
+        cfg->full_outer_loop = 0;
+        break;
+            
     case 9:            /* no psymodel, no noise shaping */
         cfg->noise_shaping = 0;
         cfg->noise_shaping_amp = 0;
@@ -385,7 +424,7 @@ lame_init_qval(lame_global_flags * gfp)
         if (cfg->subblock_gain == -1)
             cfg->subblock_gain = 1;
         cfg->use_best_huffman = 1;
-        cfg->full_outer_loop = 1;
+        cfg->full_outer_loop = 0;
         break;
             
     case 7:            /* use psymodel (for short block and m/s switching), but no noise shapping */
