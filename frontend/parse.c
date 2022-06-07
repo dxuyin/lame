@@ -2322,13 +2322,13 @@ parse_args_(lame_global_flags * gfp, int argc, char **argv,
                         if (argUsed) 
                             (void) lame_set_quality(gfp, int_value);
                         break;
-	                case '12':
+	                case '2':
                         (void) lame_set_quality(gfp, 12);
                         break;
-                        case '11':
+                        case '1':
                         (void) lame_set_quality(gfp, 11);
                         break;
-			case '10':
+			case '0':
                         (void) lame_set_quality(gfp, 10);
                         break;	    
                     case 'f':
