@@ -32,7 +32,7 @@
 
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include &lt;config.h&gt;
 #endif
 
 
@@ -63,7 +63,7 @@ get_lame_version(void)
     static /*@observer@ */ const char *const str =
         STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) " "
         "(beta " STR(LAME_PATCH_VERSION) ", " __DATE__ ")";
-#elif LAME_RELEASE_VERSION && (LAME_PATCH_VERSION > 0)
+#elif LAME_RELEASE_VERSION &amp;&amp; (LAME_PATCH_VERSION &gt; 0)
     static /*@observer@ */ const char *const str =
         STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) "." STR(LAME_PATCH_VERSION);
 #else
@@ -94,7 +94,7 @@ get_lame_short_version(void)
 #elif LAME_BETA_VERSION
     static /*@observer@ */ const char *const str =
         STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) " (beta " STR(LAME_PATCH_VERSION) ")";
-#elif LAME_RELEASE_VERSION && (LAME_PATCH_VERSION > 0)
+#elif LAME_RELEASE_VERSION &amp;&amp; (LAME_PATCH_VERSION &gt; 0)
     static /*@observer@ */ const char *const str =
         STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) "." STR(LAME_PATCH_VERSION);
 #else
@@ -121,36 +121,18 @@ get_lame_very_short_version(void)
 #define P "a"
 #elif LAME_BETA_VERSION
 #define P "b"
-#elif LAME_RELEASE_VERSION && (LAME_PATCH_VERSION > 0)
+#elif LAME_RELEASE_VERSION &amp;&amp; (LAME_PATCH_VERSION &gt; 0)
 #define P "r"
 #else
 #define P " "
 #endif
     static /*@observer@ */ const char *const str =
-#if (LAME_PATCH_VERSION >= 0)
+#if (LAME_PATCH_VERSION &gt; 0)
       "L" STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) P STR(LAME_PATCH_VERSION)
 #else
-      "L" STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) P
+      "LAME" STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) P
 #endif
       ;
-    return str;
-}
-
-/*! Get the _very_ short LAME version string. */
-/*!
-  It's used in the LAME VBR tag only, limited to 9 characters max.
-  Due to some 3rd party HW/SW decoders, it has to start with LAME.
-
-  \param void   
-  \return a pointer to the short version of the LAME version string.
- */
-const char*
-get_lame_tag_encoder_short_version(void)
-{
-    static /*@observer@ */ const char *const str =
-            /* FIXME: new scheme / new version counting / drop versioning here ? */
-    "L" STR(LAME_MAJOR_VERSION) "." STR(LAME_MINOR_VERSION) P
-    ;
     return str;
 }
 
@@ -162,11 +144,11 @@ get_lame_tag_encoder_short_version(void)
 const char *
 get_psy_version(void)
 {
-#if   PSY_ALPHA_VERSION > 0
+#if   PSY_ALPHA_VERSION &gt; 0
     static /*@observer@ */ const char *const str =
         STR(PSY_MAJOR_VERSION) "." STR(PSY_MINOR_VERSION)
         " (alpha " STR(PSY_ALPHA_VERSION) ", " __DATE__ " " __TIME__ ")";
-#elif PSY_BETA_VERSION > 0
+#elif PSY_BETA_VERSION &gt; 0
     static /*@observer@ */ const char *const str =
         STR(PSY_MAJOR_VERSION) "." STR(PSY_MINOR_VERSION)
         " (beta " STR(PSY_BETA_VERSION) ", " __DATE__ ")";
@@ -206,28 +188,28 @@ get_lame_version_numerical(lame_version_t * lvp)
     static /*@observer@ */ const char *const features = ""; /* obsolete */
 
     /* generic version */
-    lvp->major = LAME_MAJOR_VERSION;
-    lvp->minor = LAME_MINOR_VERSION;
+    lvp-&gt;major = LAME_MAJOR_VERSION;
+    lvp-&gt;minor = LAME_MINOR_VERSION;
 #if LAME_ALPHA_VERSION
-    lvp->alpha = LAME_PATCH_VERSION;
-    lvp->beta = 0;
+    lvp-&gt;alpha = LAME_PATCH_VERSION;
+    lvp-&gt;beta = 0;
 #elif LAME_BETA_VERSION
-    lvp->alpha = 0;
-    lvp->beta = LAME_PATCH_VERSION;
+    lvp-&gt;alpha = 0;
+    lvp-&gt;beta = LAME_PATCH_VERSION;
 #else
-    lvp->alpha = 0;
-    lvp->beta = 0;
+    lvp-&gt;alpha = 0;
+    lvp-&gt;beta = 0;
 #endif
 
     /* psy version */
-    lvp->psy_major = PSY_MAJOR_VERSION;
-    lvp->psy_minor = PSY_MINOR_VERSION;
-    lvp->psy_alpha = PSY_ALPHA_VERSION;
-    lvp->psy_beta = PSY_BETA_VERSION;
+    lvp-&gt;psy_major = PSY_MAJOR_VERSION;
+    lvp-&gt;psy_minor = PSY_MINOR_VERSION;
+    lvp-&gt;psy_alpha = PSY_ALPHA_VERSION;
+    lvp-&gt;psy_beta = PSY_BETA_VERSION;
 
     /* compile time features */
     /*@-mustfree@ */
-    lvp->features = features;
+    lvp-&gt;features = features;
     /*@=mustfree@ */
 }
 
