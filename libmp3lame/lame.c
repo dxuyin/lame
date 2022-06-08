@@ -367,6 +367,54 @@ lame_init_qval(lame_global_flags * gfp)
 
     switch (gfp->quality) {
     default:
+ case 19:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        if (gfc->sv_qnt.substep_shaping == 0)
+            gfc->sv_qnt.substep_shaping = 2;
+        cfg->noise_shaping_amp = 4;
+        cfg->noise_shaping_stop = 4;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 1;
+        cfg->full_outer_loop = 0;
+        break;
+ case 18:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        if (gfc->sv_qnt.substep_shaping == 0)
+            gfc->sv_qnt.substep_shaping = 2;
+        cfg->noise_shaping_amp = 4;
+        cfg->noise_shaping_stop = 4;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 2;
+        cfg->full_outer_loop = 0;
+        break;
+ case 17:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        if (gfc->sv_qnt.substep_shaping == 0)
+            gfc->sv_qnt.substep_shaping = 2;
+        cfg->noise_shaping_amp = 4;
+        cfg->noise_shaping_stop = 2;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 1;
+        cfg->full_outer_loop = 0;
+        break;
+ case 16:
+        if (cfg->noise_shaping == 0)
+            cfg->noise_shaping = 1;
+        if (gfc->sv_qnt.substep_shaping == 0)
+            gfc->sv_qnt.substep_shaping = 2;
+        cfg->noise_shaping_amp = 4;
+        cfg->noise_shaping_stop = 2;
+        if (cfg->subblock_gain == -1)
+            cfg->subblock_gain = 1;
+        cfg->use_best_huffman = 2;
+        cfg->full_outer_loop = 0;
+        break;
     case 15:
         if (cfg->noise_shaping == 0)
             cfg->noise_shaping = 1;
@@ -414,8 +462,7 @@ lame_init_qval(lame_global_flags * gfp)
             cfg->subblock_gain = 1;
         cfg->use_best_huffman = 1;
         cfg->full_outer_loop = 0;
-        break;
-            
+        break;           
         case 11:
         if (cfg->noise_shaping == 0)
             cfg->noise_shaping = 1;
@@ -427,8 +474,7 @@ lame_init_qval(lame_global_flags * gfp)
             cfg->subblock_gain = 1;
         cfg->use_best_huffman = 1;
         cfg->full_outer_loop = 0;
-        break;
-            
+        break;            
     case 10:
         if (cfg->noise_shaping == 0)
             cfg->noise_shaping = 1;
