@@ -31,15 +31,11 @@
 #include "util.h"
 #include "lame_global_flags.h"
 
-#define SET_OPTION(opt, val, def) if (enforce) \
+#define SET_OPTION(opt, val, def) \
     (void) lame_set_##opt(gfp, val); \
-    else if (!(fabs(lame_get_##opt(gfp) - def) > 0)) \
-    (void) lame_set_##opt(gfp, val);
 
-#define SET__OPTION(opt, val, def) if (enforce) \
+#define SET__OPTION(opt, val, def) \
     lame_set_##opt(gfp, val); \
-    else if (!(fabs(lame_get_##opt(gfp) - def) > 0)) \
-    lame_set_##opt(gfp, val);
 
 #undef Min
 #undef Max
@@ -224,7 +220,7 @@ apply_vbr_preset(lame_global_flags * gfp, int a, int enforce)
 }
 
 static int
-apply_abr_preset(lame_global_flags * gfp, int preset, int enforce)
+apply_abr_preset(lame_global_flags * gfp, int preset)
 {
     int     k;
 
