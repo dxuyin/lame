@@ -390,7 +390,7 @@ apply_preset(lame_global_flags * gfp, int preset, int enforce)
         {
             preset = 320;
             gfp->preset = preset;
-            (void) apply_abr_preset(gfp, preset, enforce);
+            (void) apply_abr_preset(gfp, preset);
             lame_set_VBR(gfp, vbr_off);
             return preset;
         }
@@ -434,7 +434,7 @@ apply_preset(lame_global_flags * gfp, int preset, int enforce)
         }
     }
     if (8 <= preset && preset <= 320) {
-        return apply_abr_preset(gfp, preset, enforce);
+        return apply_abr_preset(gfp, preset);
     }
 
     gfp->preset = 0;    /*no corresponding preset found */
