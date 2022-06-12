@@ -18411,12 +18411,12 @@ if test -n "$mpg123_CFLAGS"; then
     pkg_cv_mpg123_CFLAGS="$mpg123_CFLAGS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmpg123 >= 1.26.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libmpg123 >= 1.26.0") 2>&5
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmpg123\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libmpg123") 2>&5
   ac_status=$?
   printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_mpg123_CFLAGS=`$PKG_CONFIG --cflags "libmpg123 >= 1.26.0" 2>/dev/null`
+  pkg_cv_mpg123_CFLAGS=`$PKG_CONFIG --cflags "libmpg123" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
@@ -18428,12 +18428,12 @@ if test -n "$mpg123_LIBS"; then
     pkg_cv_mpg123_LIBS="$mpg123_LIBS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmpg123 >= 1.26.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libmpg123 >= 1.26.0") 2>&5
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmpg123\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libmpg123") 2>&5
   ac_status=$?
   printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_mpg123_LIBS=`$PKG_CONFIG --libs "libmpg123 >= 1.26.0" 2>/dev/null`
+  pkg_cv_mpg123_LIBS=`$PKG_CONFIG --libs "libmpg123" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
@@ -18454,9 +18454,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        mpg123_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libmpg123 >= 1.26.0" 2>&1`
+	        mpg123_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libmpg123" 2>&1`
         else
-	        mpg123_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libmpg123 >= 1.26.0" 2>&1`
+	        mpg123_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libmpg123" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$mpg123_PKG_ERRORS" >&5
