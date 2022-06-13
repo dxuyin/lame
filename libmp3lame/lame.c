@@ -1145,8 +1145,6 @@ lame_init_params(lame_global_flags * gfp)
              *  quality level, actually level 6 does it.
              *  down to level 6
              */
-            if (gfp->quality > 6)
-                gfp->quality = 6;
 
 
             if (gfp->quality < 0)
