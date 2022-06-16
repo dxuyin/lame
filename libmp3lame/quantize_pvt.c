@@ -220,7 +220,7 @@ ATHmdct(SessionConfig_t const *cfg, FLOAT f)
     ath += cfg->ATH_offset_db;
 
     /* modify the MDCT scaling for the ATH and convert to energy */
-    ath = pow(10.0, ath / 10.0 + cfg->ATHlower);
+    ath = powf(10.0, ath * 0.1);
     return ath;
 }
 
@@ -670,10 +670,11 @@ calc_xmin_new(lame_internal_flags const *gfc,
 
     for (gsfb = 0; gsfb < cod_info->psy_lmax; gsfb++) {
         FLOAT   en0, xmin;
-        FLOAT   rh1, rh2;
+        FLOAT   rh1, rh2, rh3;
         int     width, l;
 
-        xmin = athAdjust(ATH->adjust, ATH->l[gsfb], ATH->floor, cfg->vbr == vbr_mt ? 1 : 0);
+        xmin = athAdjust(ATH->adjust_factor, ATH->l[gsfb], ATH->floor, cfg->vbr == vbr_mt ? cfg->ATHfixpoint : 0);
+        xmin *= gfc->sv_qnt.longfact[gsfb];
 
         width = cod_info->width[gsfb];
         rh1 = xmin / width;
@@ -735,12 +736,13 @@ calc_xmin_new(lame_internal_flags const *gfc,
         int     width, b, l;
         FLOAT   tmpATH;
 
-        tmpATH = athAdjust(ATH->adjust, ATH->s[sfb], ATH->floor, cfg->vbr == vbr_mt ? 1 : 0);
-        
+        tmpATH = athAdjust(ATH->adjust_factor, ATH->s[sfb], ATH->floor, cfg->ATHfixpoint);
+        tmpATH *= gfc->sv_qnt.shortfact[sfb];
+                
         width = cod_info->width[gsfb];
         for (b = 0; b < 3; b++) {
             FLOAT   en0 = 0.0, xmin = tmpATH;
-            FLOAT   rh1, rh2;
+            FLOAT   rh1, rh2, rh3;
 
             rh1 = tmpATH / width;
 #ifdef DBL_EPSILON
