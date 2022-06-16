@@ -215,12 +215,8 @@ ATHmdct(SessionConfig_t const *cfg, FLOAT f)
 
     ath = ATHformula(cfg, f);
 
-    if (cfg->vbr == vbr_mt && cfg->ATHfixpoint > 0) {
-        ath -= cfg->ATHfixpoint;
-    }
-    else {
-        ath -= NSATHSCALE;
-    }
+    ath -= NSATHSCALE;
+
     ath += cfg->ATH_offset_db;
 
     /* modify the MDCT scaling for the ATH and convert to energy */
@@ -364,56 +360,31 @@ iteration_init(lame_internal_flags * gfc)
 
        
 
-        /* long */
-        db = cfg->adjust_bass_db;
-        if (cfg->vbr == vbr_mt) db -= 2.0f;
-        adjust = powf(10.f, db * 0.1f);
-        for (i = 0; i <= 6; ++i) {
-            gfc->sv_qnt.longfact[i] = adjust;
-        }
-        db = cfg->adjust_alto_db;
-        if (cfg->vbr == vbr_mt) db -= 1.0f;
-        adjust = powf(10.f, db * 0.1f);
-        for (; i <= 13; ++i) {
-            gfc->sv_qnt.longfact[i] = adjust;
-        }
-        db = cfg->adjust_treble_db;
-        if (cfg->vbr == vbr_mt) db -= 0.025f;
-        adjust = powf(10.f, db * 0.1f);
-        for (; i <= 20; ++i) {
-            gfc->sv_qnt.longfact[i] = adjust;
-        }
-        db = cfg->adjust_sfb21_db;
-        if (cfg->vbr == vbr_mt) db += 1.f;
-        adjust = powf(10.f, db * 0.1f);
-        for (; i < SBMAX_l; ++i) {
-            gfc->sv_qnt.longfact[i] = adjust;
-        }
+        for (i = 0; i < SBMAX_l; i++) {
+            FLOAT   f;
+            if (i <= 6)
+                f = cfg->adjust_bass;
+            else if (i <= 13)
+                f = cfg->adjust_alto;
+            else if (i <= 20)
+                f = cfg->adjust_treble;
+            else
+                f = cfg->adjust_sfb21;
 
-        /* short */
-        db = cfg->adjust_bass_db;
-        if (cfg->vbr == vbr_mt) db -= 8.f;
-        adjust = powf(10.f, db * 0.1f);
-        for (i = 0; i <= 2; ++i) {
-            gfc->sv_qnt.shortfact[i] = adjust;
+            gfc->sv_qnt.longfact[i] = f;
         }
-        db = cfg->adjust_alto_db;
-        if (cfg->vbr == vbr_mt) db -= 4.5f;
-        adjust = powf(10.f, db * 0.1f);
-        for (; i <= 6; ++i) {
-            gfc->sv_qnt.shortfact[i] = adjust;
-        }
-        db = cfg->adjust_treble_db;
-        if (cfg->vbr == vbr_mt) db -= 0.5f;
-        adjust = powf(10.f, db * 0.1f);
-        for (; i <= 11; ++i) {
-            gfc->sv_qnt.shortfact[i] = adjust;
-        }
-        db = cfg->adjust_sfb21_db;
-        if (cfg->vbr == vbr_mt) db += 1.f;
-        adjust = powf(10.f, db * 0.1f);
-        for (; i < SBMAX_s; ++i) {
-            gfc->sv_qnt.shortfact[i] = adjust;
+        for (i = 0; i < SBMAX_s; i++) {
+            FLOAT   f;
+            if (i <= 5)
+                f = cfg->adjust_bass;
+            else if (i <= 10)
+                f = cfg->adjust_alto;
+            else if (i <= 11)
+                f = cfg->adjust_treble;
+            else
+                f = cfg->adjust_sfb21;
+
+            gfc->sv_qnt.shortfact[i] = f;
         }
     }
 }
@@ -554,12 +525,12 @@ reduce_side(int targ_bits[2], FLOAT ms_ener_ratio, int mean_bits, int max_bits)
  */
 
 FLOAT
-athAdjust(FLOAT a, FLOAT x, FLOAT athFloor, float ATHfixpoint)
+athAdjust(FLOAT a, FLOAT x, FLOAT athFloor, int sw)
 {
     /*  work in progress
      */
     FLOAT const o = 90.30873362;
-    FLOAT const p = (ATHfixpoint < 1.f) ? 94.82444863 : ATHfixpoint;
+    FLOAT const p = (sw == 0) ? 94.82444863 : 100.;
     FLOAT   u = FAST_LOG10_X(x, 10.0);
     FLOAT const v = a * a;
     FLOAT   w = 0.0;
@@ -702,7 +673,7 @@ calc_xmin_new(lame_internal_flags const *gfc,
         FLOAT   rh1, rh2;
         int     width, l;
 
-        xmin = athAdjust(ATH->adjust, ATH->l[gsfb], ATH->floor, cfg->vbr == vbr_mt ? cfg->ATHfixpoint : 0);
+        xmin = athAdjust(ATH->adjust, ATH->l[gsfb], ATH->floor, cfg->vbr == vbr_mt ? 1 : 0);
 
         width = cod_info->width[gsfb];
         rh1 = xmin / width;
@@ -764,7 +735,7 @@ calc_xmin_new(lame_internal_flags const *gfc,
         int     width, b, l;
         FLOAT   tmpATH;
 
-        tmpATH = athAdjust(ATH->adjust, ATH->s[sfb], ATH->floor, cfg->vbr == vbr_mt ? cfg->ATHfixpoint : 0);
+        tmpATH = athAdjust(ATH->adjust, ATH->s[sfb], ATH->floor, cfg->vbr == vbr_mt ? 1 : 0);
         
         width = cod_info->width[gsfb];
         for (b = 0; b < 3; b++) {

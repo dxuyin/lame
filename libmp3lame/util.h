@@ -462,6 +462,10 @@ extern  "C" {
         
         float   ATHfixpoint;
 
+        float   adjust_alto;
+        float   adjust_bass;
+        float   adjust_treble;
+        float   adjust_sfb21;
         float   adjust_alto_db;
         float   adjust_bass_db;
         float   adjust_treble_db;
