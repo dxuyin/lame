@@ -2986,7 +2986,7 @@ psymodel_init(lame_global_flags const* gfp)
            and lead-voice samples, but introduces some 3 kbps bit bloat too.
            TODO: Further refinement of the shape of this hack.
          */
-        x = 20.0 * (bval[i] / xav - 1.0);
+        x = -20 + bval[i] * 20 / 10;
         if (x > 6) {
             x = 30;
         }
@@ -3063,11 +3063,11 @@ psymodel_init(lame_global_flags const* gfp)
         /* MINVAL.
            For low freq, the strength of the masking is limited by minval
            this is an ISO MPEG1 thing, dont know if it is really needed */
-        x = 7.0 * (bval[i] / xbv - 1.0);
-        if (bval[i] > xbv) {
+        x = (-7.0 + bval[i] * 7.0 / 12.0);
+        if (bval[i] > 12) {
             x *= 1 + log(1 + x) * 3.1;
         }
-        if (bval[i] < xbv) {
+        if (bval[i] < 12) {
             x *= 1 + log(1 - x) * 2.3;
         }
         if (x > 6) {
