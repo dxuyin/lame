@@ -1313,27 +1313,28 @@ lame_init_params(lame_global_flags * gfp)
     cfg->use_temporal_masking_effect = gfp->useTemporal;
     cfg->use_safe_joint_stereo = gfp->exp_nspsytune & 2;
     {
-        i = (gfp->exp_nspsytune >> 2) & 63;
-        if (i >= 32)
-            i -= 64;
-        cfg->adjust_bass = pow(10, i / 4.0 / 10.0);
+        cfg->adjust_bass_db = (gfp->exp_nspsytune >> 2) & 63;
+        if (cfg->adjust_bass_db >= 32.f)
+            cfg->adjust_bass_db -= 64.f;
+        cfg->adjust_bass_db *= 0.25f;
 
-        i = (gfp->exp_nspsytune >> 8) & 63;
-        if (i >= 32)
-            i -= 64;
-        cfg->adjust_alto = pow(10, i / 4.0 / 10.0);
+        cfg->adjust_alto_db = (gfp->exp_nspsytune >> 8) & 63;
+        if (cfg->adjust_alto_db >= 32.f)
+            cfg->adjust_alto_db -= 64.f;
+        cfg->adjust_alto_db *= 0.25f;
 
-        i = (gfp->exp_nspsytune >> 14) & 63;
-        if (i >= 32)
-            i -= 64;
-        cfg->adjust_treble = pow(10, i / 4.0 / 10.0);
+        cfg->adjust_treble_db = (gfp->exp_nspsytune >> 14) & 63;
+        if (cfg->adjust_treble_db >= 32.f)
+            cfg->adjust_treble_db -= 64.f;
+        cfg->adjust_treble_db *= 0.25f;
 
         /*  to be compatible with Naoki's original code, the next 6 bits
          *  define only the amount of changing treble for sfb21 */
-        i = (gfp->exp_nspsytune >> 20) & 63;
-        if (i >= 32)
-            i -= 64;
-        cfg->adjust_sfb21 = cfg->adjust_treble * pow(10, ((cfg->vbr == vbr_mt ? 3 : 0) + i / 4.0) / 10.0);
+        cfg->adjust_sfb21_db = (gfp->exp_nspsytune >> 20) & 63;
+        if (cfg->adjust_sfb21_db >= 32.f)
+            cfg->adjust_sfb21_db -= 64.f;
+        cfg->adjust_sfb21_db *= 0.25f;
+        cfg->adjust_sfb21_db += cfg->adjust_treble_db;
     }
 
     /* Setting up the PCM input data transform matrix, to apply 
