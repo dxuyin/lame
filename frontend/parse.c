@@ -2101,9 +2101,6 @@ parse_args_(lame_global_flags * gfp, int argc, char **argv,
                     if (argUsed) 
                         (void) lame_set_useTemporal(gfp, int_value ? 1 : 0);
 
-                T_ELIF_INTERNAL("nspsytune")
-                    ;
-
                 T_ELIF_INTERNAL("nssafejoint")
                     lame_set_exp_nspsytune(gfp, lame_get_exp_nspsytune(gfp) | 2);
 
