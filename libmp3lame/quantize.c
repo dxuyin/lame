@@ -594,21 +594,27 @@ quant_compare(const int quant_comp,
 
     switch (quant_comp) {
     default:
-    case 9:{
-            if (best->over_count > 0) {
-                /* there are distorted sfb */
-                better = calc->over_SSD <= best->over_SSD;
-                if (calc->over_SSD == best->over_SSD)
-                    better = calc->bits < best->bits;
+        case 9: {
+            /* minimize var_noise in order to shape noise */
+            if (best->over_count > 0 ) {
+                /* there are distorted sfb*/
+	            better = (calc->over_count == 0)
+                        || ( calc->over_noise <= best->over_noise &&
+                             calc->var_noise  <= best->var_noise )
+                        || ( calc->over_noise <= best->over_noise &&
+                             calc->max_noise  <= best->max_noise );
+            } else {
+                /* no distorted sfb*/
+                if (calc->over_count > 0) {
+                    better = 0;
+                } else {
+		            better = (calc->tot_noise < best->tot_noise)
+		                &&   (calc->var_noise <= best->var_noise);
+                }
             }
-            else {
-                /* no distorted sfb */
-                better = ((calc->max_noise < 0) &&
-                          ((calc->max_noise * 10 + calc->bits) <=
-                           (best->max_noise * 10 + best->bits)));
-            }
-            break;
+	        break;
         }
+
 
     case 0:
         better = calc->over_count < best->over_count
