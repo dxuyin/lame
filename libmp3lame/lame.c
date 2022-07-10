@@ -2483,6 +2483,8 @@ lame_init_old(lame_global_flags * gfp)
     gfc->ov_rpg.noclipGainChange = 0;
     gfc->ov_rpg.noclipScale = -1.0;
 
+    gfc->padding_type = PAD_ADJUST;
+
     gfp->asm_optimizations.mmx = 1;
     gfp->asm_optimizations.amd3dnow = 1;
     gfp->asm_optimizations.sse = 1;

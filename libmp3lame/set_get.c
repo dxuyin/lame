@@ -843,33 +843,30 @@ lame_get_error_protection(const lame_global_flags * gfp)
     return 0;
 }
 
-
-#if DEPRECATED_OR_OBSOLETE_CODE_REMOVED
-/* padding_type. 0=pad no frames  1=pad all frames 2=adjust padding(default) */
-int CDECL lame_set_padding_type(lame_global_flags *, Padding_type);
-Padding_type CDECL lame_get_padding_type(const lame_global_flags *);
-#else
-#endif
-
 /*
  * padding_type.
- *  PAD_NO     = pad no frames
- *  PAD_ALL    = pad all frames
- *  PAD_ADJUST = adjust padding
+ *  PAD_NO     = 0: pad no frames
+ *  PAD_ALL    = 1: pad all frames
+ *  PAD_ADJUST = 2: adjust padding
  */
 int
 lame_set_padding_type(lame_global_flags * gfp, Padding_type padding_type)
 {
-    (void) gfp;
-    (void) padding_type;
+    lame_internal_flags *ifp=gfp->internal_flags;
+
+    if (padding_type)
+        ifp->padding_type = PAD_ADJUST;
+    else
+        ifp->padding_type = PAD_NO;
     return 0;
 }
 
 Padding_type
 lame_get_padding_type(const lame_global_flags * gfp)
 {
-    (void) gfp;
-    return PAD_ADJUST;
+    lame_internal_flags *ifp=gfp->internal_flags;
+
+    return (Padding_type)ifp->padding_type;
 }
 
 
@@ -2341,3 +2338,16 @@ lame_get_maximum_number_of_samples(lame_t gfp, size_t buffer_size)
     }
     return LAME_GENERICERROR;
 }
+
+/* Bytes encoded so far. */
+unsigned long
+lame_get_bytes_so_far(const lame_global_flags * gfp)
+{
+    if (is_lame_global_flags_valid(gfp)) {
+        lame_internal_flags const *const gfc = gfp->internal_flags;
+        if (is_lame_internal_flags_valid(gfc)) {
+            return gfc->VBR_seek_table.nBytesWritten;
+        }
+    }
+    return 0;
+ }
